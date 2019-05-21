@@ -17,11 +17,13 @@ const schema = mongoose.Schema({
   },
   allowDtPUbl: {
     type: Date,
-    required: [true,"Data de publicação da portaria é campo obrigatório"]
+    required: [true,"Data de publicação da portaria é campo obrigatório"],
+    default: Date.now
   },
   allowDtExp: {
     type: Date,
-    required: [true,"data de vencimento da portaria é campo obrigatório"]
+    required: [true,"data de vencimento da portaria é campo obrigatório"],
+    default: Date.now
   },
   staffMainCoord: {
     type: String,
@@ -29,11 +31,11 @@ const schema = mongoose.Schema({
   },
   staffFieldCoord: {
     type: String,
-    required: [true,"Coordenador de campo é campo obrigatório"]
+    required: [false,"Coordenador de campo é campo obrigatório"]
   },
   staffFieldArch: {
     type: String,
-    required: [true,"Arqueólogo de campo é campo obrigatório"]
+    required: [false,"Arqueólogo de campo é campo obrigatório"]
   },
   state: {
     type: String,
@@ -50,27 +52,27 @@ const schema = mongoose.Schema({
   activities: {
     type: Array,
     required: [true,"Atividades é campo obrigatório"]
-  }
+  },
   createDate: {
     type: Date,
+    required: true,
     default: Date.now
-  }
+  },
   updateDate: {
     type: Date,
+    required: true,
     default: Date.now
-  }
+  },
   createUser: {
-    type: mongoose.schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
   updateUser: {
-    type: mongoose.schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   }
-
-
 })
 
 const Project = mongoose.model('Project', schema)

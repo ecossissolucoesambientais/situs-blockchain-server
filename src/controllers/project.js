@@ -24,6 +24,20 @@ exports.show = async (req, res) => {
   }
 }
 
+// Create project
+exports.new = async (req, res) => {
+
+  try {
+    const project = await Project.create(req.body)
+    
+    return res.send({ 
+      project
+    })
+  } catch (err) {
+    return res.status(400).send({ error: 'Erro ao criar projeto' })
+  }
+}
+
 // Update project by ID
 exports.update = async (req, res) => {
   try {    
