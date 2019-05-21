@@ -10,6 +10,8 @@ const cors = require('cors')
 const indexRoute = require('./routes/index')
 const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
+const projectRoute = require('./routes/project')
+
 
 // Define app as an Express instance
 const app = express()
@@ -25,6 +27,8 @@ app.use(cors())
 app.use('/', indexRoute)
 app.use('/auth', authRoute)
 app.use('/users', userRoute)
+app.use('/projects', projectRoute)
+
 
 // Create Server
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
