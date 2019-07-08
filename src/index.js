@@ -11,6 +11,7 @@ const indexRoute = require('./routes/index')
 const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const projectRoute = require('./routes/project')
+const pointRoute = require('./routes/point')
 
 
 // Define app as an Express instance
@@ -28,6 +29,7 @@ app.use('/', indexRoute)
 app.use('/auth', authRoute)
 app.use('/users', userRoute)
 app.use('/projects', projectRoute)
+app.use('/points', pointRoute)
 
 
 // Create Server
