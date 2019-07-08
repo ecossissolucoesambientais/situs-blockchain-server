@@ -44,7 +44,7 @@ const schema = mongoose.Schema({
   }
 })
 
-const point = mongoose.model('Point', schema)
+const Point = mongoose.model('Point', schema)
 
 module.exports = Point
 
