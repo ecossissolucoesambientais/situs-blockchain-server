@@ -15,7 +15,7 @@ const schema = mongoose.Schema({
     type: Number,
     required: [true,"Número de portaria é campo obrigatório"]
   },
-  allowDtPUbl: {
+  allowDtPubl: {
     type: Date,
     required: [true,"Data de publicação da portaria é campo obrigatório"],
     default: Date.now
