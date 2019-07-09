@@ -17,6 +17,25 @@ const schema = mongoose.Schema({
       required: true
     }
   },
+
+  relief: {
+    type: String,
+    required: [false]
+  },
+  soil: {
+    type: String,
+    required: [false]
+  },
+  vegetation: {
+    type: String,
+    required: [false]
+  },
+  status: {
+    type: String,
+    enum: ['Em aberto','Realizado','Cancelado'],
+    default: 'Em aberto',
+    required: [false]
+  },
   project: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
