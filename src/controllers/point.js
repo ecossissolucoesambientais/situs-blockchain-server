@@ -24,6 +24,7 @@ exports.show = async (req, res) => {
   }
 }
 
+/* CREATE POINT ORIGINAL
 // Create point
 exports.new = async (req, res) => {
   const { projectId, userId, geojson } = req.body
@@ -48,6 +49,31 @@ exports.new = async (req, res) => {
  })
 
 }
+*/
+
+exports.new = async (req, res) => {
+  const { projectId, userId, geojson } = req.body
+  const pointsArray = geojson.features.map(point => {
+    name: point.properties.name, 
+    location: {
+      type: "Point",
+      coordinates: point.geometry.coordinates
+    }, 
+    project: projectId, 
+    createUser: userId,
+    updateUser: userId    
+  })
+
+  try {
+    const points = await Point.insertMany(pointsArray)   
+    return res.send({ 
+      points
+    })
+  } catch (err) {
+    return res.status(400).send({ error: 'Erro ao criar pontos' })
+  }
+}
+
 
 // Update point by ID
 exports.update = async (req, res) => {
