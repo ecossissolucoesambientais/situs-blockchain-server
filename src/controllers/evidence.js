@@ -25,7 +25,7 @@ exports.show = async (req, res) => {
 // Create evidence
 exports.new = async (req, res) => {
   try {
-    const project = await Project.create(req.body)
+    const evidence = await Evidence.create(req.body)
   } catch (err) {
     return res.status(400).send({ error: err })
   }
