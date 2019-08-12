@@ -54,6 +54,7 @@ exports.new = async (req, res) => {
 exports.new = async (req, res) => {
   const { projectId, userId, geojson } = req.body
   const pointsArray = geojson.features.map(point => {
+    return {
     name: point.properties.name, 
     location: {
       type: "Point",
@@ -62,6 +63,7 @@ exports.new = async (req, res) => {
     project: projectId, 
     createUser: userId,
     updateUser: userId    
+    }
   })
 
   try {
