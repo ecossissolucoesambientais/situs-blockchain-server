@@ -1,4 +1,4 @@
-//const Point = require('../models/point')
+const Image = require('../models/image')
 
 // List all points
 exports.list = async (req, res) => {
@@ -107,4 +107,23 @@ exports.delete = async (req, res) => {
   catch (err) {
     return res.status(400).send({ error: 'Erro ao remover ponto' })
   }
+}
+
+// Faz upload de um arquivo de imagem
+exports.upload = async (req, res) => {
+  console.log(req)
+  try {
+    const { originalname: name, size, filename: key} = req.file
+    const image = await Image.create({
+        name, 
+        size,
+        key,
+        url: '',
+        createUser: req.userId,
+        updateUser: req.userId
+    })
+    return res.status(200).send(image)
+  }
+  catch (err) {
+    return res.status(400).send({ error: req })  }
 }
