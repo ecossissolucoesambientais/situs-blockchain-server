@@ -29,8 +29,8 @@ exports.new = async (req, res) => {
   } catch (err) {
     return res.status(400).send({ error: err })
   }
- }
 }
+
 
 // Update evidence by ID
 exports.update = async (req, res) => {
