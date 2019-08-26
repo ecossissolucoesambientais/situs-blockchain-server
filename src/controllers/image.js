@@ -111,19 +111,18 @@ exports.delete = async (req, res) => {
 
 // Faz upload de um arquivo de imagem
 exports.upload = async (req, res) => {
-  console.log(req)
   try {
-    const { originalname: name, size, filename: key} = req.file
+    const { originalname: name, size, key, location: url = ''} = req.file
     const image = await Image.create({
         name, 
         size,
         key,
-        url: '',
+        url,
         createUser: req.userId,
         updateUser: req.userId
     })
     return res.status(200).send(image)
   }
   catch (err) {
-    return res.status(400).send({ error: req })  }
+    return res.status(400).send({ error: 'Erro ao criar imagem.' })  }
 }
