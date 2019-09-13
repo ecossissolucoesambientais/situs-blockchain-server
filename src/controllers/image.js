@@ -118,6 +118,8 @@ exports.upload = async (req, res) => {
         size,
         key,
         url,
+        refId: req.body.refId,
+        refModel: req.body.refModel,
         createUser: req.userId,
         updateUser: req.userId
     })

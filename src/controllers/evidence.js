@@ -1,4 +1,5 @@
 const Evidence = require('../models/evidence')
+const Image = require('../models/image')
 
 // List all evidences
 exports.list = async (req, res) => {
@@ -8,6 +9,17 @@ exports.list = async (req, res) => {
     return res.status(200).send(evidences)
   } catch (err) {
     return res.status(400).send({ error: 'Erro ao listar evidências' })
+  }
+}
+
+// List all images from this evidence
+exports.images = async (req, res) => {
+  try {
+    const images = await Image
+      .find({refModel: 'Evidence', refId: req.params.id})
+    return res.status(200).send(images)
+  } catch (err) {
+    return res.status(400).send({ error: 'Erro ao listar imagens' })
   }
 }
 
@@ -22,10 +34,12 @@ exports.show = async (req, res) => {
   }
 }
 
+
 // Create evidence
 exports.new = async (req, res) => {
   try {
     const evidence = await Evidence.create(req.body)
+    res.status(200).send(evidence)
   } catch (err) {
     return res.status(400).send({ error: err })
   }
@@ -61,3 +75,4 @@ exports.delete = async (req, res) => {
     return res.status(400).send({ error: 'Erro ao remover evidência' })
   }
 }
+

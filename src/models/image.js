@@ -15,6 +15,15 @@ const schema = mongoose.Schema({
   url: {
     type: String
   },
+  refId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true,"A imagem tem que estar associada a um ponto ou evidência."]    
+  },
+  refModel: {
+    type: String,
+    enum: ['Point','Evidence'],    
+    required: [true,"A imagem tem que estar associada a um ponto ou evidência."]    
+  },
   createDate: {
     type: Date,
     required: true,

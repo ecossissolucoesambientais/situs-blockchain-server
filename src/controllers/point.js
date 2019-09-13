@@ -1,4 +1,6 @@
 const Point = require('../models/point')
+const Image = require('../models/image')
+
 
 // List all points
 exports.list = async (req, res) => {
@@ -9,6 +11,17 @@ exports.list = async (req, res) => {
   }
   catch (err) {
     return res.status(400).send({ error: 'Erro ao listar pontos' })
+  }
+}
+
+// List all images from this point
+exports.images = async (req, res) => {
+  try {
+    const images = await Image
+      .find({refModel: 'Point', refId: req.params.id})
+    return res.status(200).send(images)
+  } catch (err) {
+    return res.status(400).send({ error: 'Erro ao listar imagens' })
   }
 }
 

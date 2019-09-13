@@ -8,6 +8,7 @@ const authMiddleare = require('../middlewares/auth')
 router.use(authMiddleare)
 
 router.get('/', controller.list)
+router.get('/images/:id', controller.images)
 router.get('/:id', controller.show)
 router.put('/update/:id', controller.update)
 router.post('/new', controller.new)
