@@ -1,115 +1,45 @@
 const Image = require('../models/image')
 
-// List all points
 exports.list = async (req, res) => {
   try {
-    const points = await Point
+    const images = await Image
       .find()
-    return res.status(200).send(points)
+    return res.status(200).send(images)
   }
   catch (err) {
-    return res.status(400).send({ error: 'Erro ao listar pontos' })
+    return res.status(400).send({ error: 'Erro ao listar imagens' })
   }
 }
 
-// Get point by ID
+// Get image by ID
 exports.show = async (req, res) => {
   try {
-    const point = await Point
+    const image = await Image
       .findById(req.params.id)
-      res.status(200).send(point)
+      res.status(200).send(image)
   }
   catch (err) {
-    return res.status(400).send({ error: 'Ponto não encontrado' })
+    return res.status(400).send({ error: 'Imagem não encontrada' })
   }
 }
 
-/* CREATE POINT ORIGINAL
-// Create point
-exports.new = async (req, res) => {
-  const { projectId, userId, geojson } = req.body
- geojson.features.map(async point => {
-  try {    
-    var point_create = await Point.create({
-      name: point.properties.name, 
-      location: {
-        type: "Point",
-        coordinates: point.geometry.coordinates
-      }, 
-      project: projectId, 
-      createUser: userId,
-      updateUser: userId
-    }) 
-    return res.send({ 
-      point_create
-    })
-  } catch (err) {
-    return res.status(400).send({ error: err })
-  }
- })
-
-}
-*/
-
-exports.new = async (req, res) => {
-  const { projectId, userId, geojson } = req.body
-  const pointsArray = geojson.features.map(point => {
-    return {
-    name: point.properties.name, 
-    location: {
-      type: "Point",
-      coordinates: point.geometry.coordinates
-    }, 
-    project: projectId, 
-    createUser: userId,
-    updateUser: userId    
-    }
-  })
-
-  try {
-    const points = await Point.insertMany(pointsArray)   
-    return res.send({ 
-      points
-    })
-  } catch (err) {
-    return res.status(400).send({ error: 'Erro ao criar pontos' })
-  }
-}
-
-
-// Update point by ID
-exports.update = async (req, res) => {
-  try {    
-    const point = await Point
-      .findByIdAndUpdate(req.params.id, req.body, { new: true })
-      if (point) {
-        res.status(200).send({ message: 'Ponto atualizado', point })
-      } else {
-        return res.status(400).send({ error: 'Ponto não encontrado' })
-      }
-  }
-  catch (err) {
-    return res.status(400).send({ error: 'Erro ao atualizar ponto' })
-  }
-}
-
-// Remove point by ID
+// Remove image by ID
 exports.delete = async (req, res) => {
   try {
-    const point = await Point.findByIdAndRemove(req.params.id)
-      if (point) {
-        res.status(200).send({ message: 'Ponto removido', Point })
+    const image = await Image.findByIdAndRemove(req.params.id)
+      if (image) {
+        res.status(200).send({ message: 'Imagem removida', Image })
       }
       else {
-        return res.status(400).send({ error: 'Ponto não encontrado' })
+        return res.status(400).send({ error: 'Imagem não encontrada' })
       }
   }
   catch (err) {
-    return res.status(400).send({ error: 'Erro ao remover ponto' })
+    return res.status(400).send({ error: 'Erro ao remover imagem' })
   }
 }
 
-// Faz upload de um arquivo de imagem
+// Upload image associated with object refId in model refModel
 exports.upload = async (req, res) => {
   try {
     const { originalname: name, size, key, location: url = ''} = req.file
