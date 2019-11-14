@@ -14,9 +14,10 @@ exports.xlsx = async(req,res) => {
 
   worksheet.addRow({word: 'Olá', def: 'Mundo'});
 
-  workbook.xlsx.writeFile('Project.xlsx');
-
-  res.download('Project.xlsx', 'Project.xlsx')
+  workbook.xlsx.writeFile('Project.xlsx')
+    .then(function() {
+      res.download('Project.xlsx', 'Project.xlsx')
+  });
 
 }
 
