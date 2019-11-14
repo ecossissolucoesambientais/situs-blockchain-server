@@ -6,6 +6,7 @@ const express = require('express')
 const morgan =require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const ExcelJS = require('exceljs')
 
 // Import Routes
 const indexRoute = require('./routes/index')
@@ -15,6 +16,7 @@ const projectRoute = require('./routes/project')
 const pointRoute = require('./routes/point')
 const evidenceRoute = require('./routes/evidence')
 const imageRoute = require('./routes/image')
+const exportRoute = require('./routes/export')
 
 
 // Define app as an Express instance
@@ -38,6 +40,7 @@ app.use('/projects', projectRoute)
 app.use('/points', pointRoute)
 app.use('/evidences', evidenceRoute)
 app.use('/images',imageRoute)
+app.use('/export',exportRoute)
 
 
 // Create Server
