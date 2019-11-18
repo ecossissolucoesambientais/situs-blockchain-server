@@ -34,7 +34,7 @@ exports.new = async (req, res) => {
       project
     })
   } catch (err) {
-    return res.status(400).send({ error: 'Erro ao criar projeto' })
+    return res.status(400).send({ error: err.message })
   }
 }
 
