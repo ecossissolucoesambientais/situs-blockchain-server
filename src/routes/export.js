@@ -10,7 +10,7 @@ const authMiddleare = require('../middlewares/auth')
 router.use(authMiddleare)
 */
 
-router.get('/xlsx', controller.xlsx)
+router.get('/xlsx/:id', controller.xlsx)
 
 
 module.exports = router
