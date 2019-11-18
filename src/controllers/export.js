@@ -39,7 +39,7 @@ exports.xlsx = async(req,res) => {
         const evidences = await Evidence({point: point._id})
         evidences.map(evidence => {
           try {
-            evidences_xls.push({ ...evidence, point_lon: point.location.coordinates[1], point_lat: point.location.coordinates[0], point_status: point.status, project: point.project })
+            evidences_xls.push({ ...evidences, point_lon: point.location.coordinates[1], point_lat: point.location.coordinates[0], point_status: point.status, project: point.project })
           } catch(err) {
             return res.status(400).send({ error: err })
           }

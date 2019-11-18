@@ -8,7 +8,7 @@ exports.list = async (req, res) => {
     return res.status(200).send(projects)
   }
   catch (err) {
-    return res.status(400).send({ error: 'Erro ao listar projetos', err})
+    return res.status(400).send({ error: 'Erro ao listar projetos' })
   }
 }
 
@@ -34,7 +34,7 @@ exports.new = async (req, res) => {
       project
     })
   } catch (err) {
-    return res.status(400).send({ error: err})
+    return res.status(400).send({ error: 'Erro ao criar projeto' })
   }
 }
 
