@@ -11,6 +11,6 @@ router.use(authMiddleare)
 */
 
 router.get('/xlsx/:id', controller.xlsx)
-
+router.get('/teste_lookup/:id', controller.teste_lookup)
 
 module.exports = router
