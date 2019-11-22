@@ -1,0 +1,165 @@
+// funciona:
+db.getCollection('images').aggregate([
+       {
+        "$lookup": {
+          "from": "evidences",
+          "localField": "refId",
+          "foreignField": "_id",
+          "as": "evidences"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$evidences",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },
+       {
+        "$lookup": {
+          "from": "points",
+          "localField": "evidences.point",
+          "foreignField": "_id",
+          "as": "points"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$points",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },       
+      {
+        "$match": {
+          "points.project" : ObjectId("5dbf916a598a81001721843c")
+        }
+      },
+       
+    ])
+
+
+// funciona ideal:
+db.getCollection('points').aggregate([
+       {
+        "$lookup": {
+          "from": "evidences",
+          "localField": "_id",
+          "foreignField": "point",
+          "as": "evidences"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$evidences",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },
+       {
+        "$lookup": {
+          "from": "images",
+          "localField": "evidences._id",
+          "foreignField": "refId",
+          "as": "images"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$images",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+            "$match": {
+            "project" : ObjectId("5dcded1904d0670017d61cc0")
+            }       
+       }
+    ])    
+
+    // melhor até agora
+    db.getCollection('points').aggregate([      
+       {
+        "$lookup": {
+          "from": "evidences",
+          "localField": "_id",
+          "foreignField": "point",
+          "as": "evidences"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$evidences",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },
+       {
+        "$lookup": {
+          "from": "images",
+          "localField": "evidences._id",
+          "foreignField": "refId",
+          "as": "images"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$images",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+        "$lookup": {
+          "from": "projects",
+          "localField": "project",
+          "foreignField": "_id",
+          "as": "projects"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$projects",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+        "$lookup": {
+          "from": "users",
+          "localField": "createUser",
+          "foreignField": "_id",
+          "as": "createUser_aux"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$createUser_aux",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+        "$lookup": {
+          "from": "users",
+          "localField": "updateUser",
+          "foreignField": "_id",
+          "as": "updateUser_aux"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$updateUser_aux",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },
+     { $group : { 
+          _id :  { 
+            evidence: "$evidences",
+            image: "$images",
+          }
+       }
+     },
+     { $group : { 
+          _id :  "$_id.evidence",
+          images: { 
+              $push: { 
+                  image:"$_id.image"
+              }
+          },     
+       }
+     }     
+    ])
