@@ -17,7 +17,10 @@ const schema = mongoose.Schema({
       required: true
     }
   },
-
+  note: {
+    type: String,
+    required: [false]
+  }, 
   relief: {
     type: String,
     required: [false]

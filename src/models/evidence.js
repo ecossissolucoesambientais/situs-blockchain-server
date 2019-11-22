@@ -12,7 +12,7 @@ const schema = mongoose.Schema({
   },
   note: {
     type: String,
-    required: [true,"Anotações é um campo obrigatório"]
+    required: [false]
   },
   depth: {
     type: String,

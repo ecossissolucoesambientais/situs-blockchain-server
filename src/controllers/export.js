@@ -13,41 +13,43 @@ function mostra(regs) {
 
   const worksheet = workbook.addWorksheet("Evidencias");
   worksheet.columns = [
-      { header: 'Id', key: 'id', width: 36 },
-      { header: 'Status', key: 'status', width: 50 },
-      { header: 'Tipo', key: 'type', width: 50 },
-      { header: 'Quantidade', key: 'quantity', width: 50 },
-      { header: 'Notas', key: 'note', width: 50 },
-      { header: 'Profundidade', key: 'depth', width: 50 },
-      { header: 'Solo', key: 'soil', width: 50 },
-      { header: 'Id do Ponto', key: 'point', width: 50 },
-      { header: 'Longitude', key: 'point_lon', width: 50 },
-      { header: 'Latitude', key: 'point_lat', width: 50 },
-      { header: 'Status do Ponto', key: 'point_status', width: 50 },
-//      { header: 'Id do Projeto', key: 'project', width: 120 },
-//      { header: 'Nome do Projeto', key: 'project_name', width: 120 },
-      { header: 'Usuário que criou', key: 'createUser', width: 50 },
-      { header: 'Usuário que atualizou', key: 'updateUser', width: 50 },
-      { header: 'Data de criação', key: 'createDate', width: 50 },
-      { header: 'Data de atualização', key: 'updateDate', width: 50 }
+      { header: 'Id da Evidência', key: 'id', width: 30 },
+      { header: 'Tipo', key: 'type', width: 30 },
+      { header: 'Quantidade', key: 'quantity', width: 15 },
+      { header: 'Notas', key: 'note', width: 80 },
+      { header: 'Profundidade', key: 'depth', width: 30 },
+      { header: 'Solo', key: 'soil', width: 30 },
+      { header: 'Id do Ponto', key: 'point', width: 30 },
+      { header: 'Nome do Ponto', key: 'point_name', width: 50 },     
+      { header: 'Longitude do Ponto', key: 'point_lon', width:320 },
+      { header: 'Latitude do Ponto', key: 'point_lat', width: 30 },
+      { header: 'Status do Ponto', key: 'point_status', width: 30 },
+      { header: 'Id do Projeto', key: 'project', width: 30 },
+      { header: 'Nome do Projeto', key: 'project_name', width: 30 },
+      { header: 'Usuário que criou', key: 'createUser', width: 30 },
+      { header: 'Usuário que atualizou', key: 'updateUser', width: 30 },
+      { header: 'Data de criação', key: 'createDate', width: 30 },
+      { header: 'Data de atualização', key: 'updateDate', width: 30 }
   ];
 
   regs.map(reg => {
     if(reg.evidences) {        
         regs_xls.push({
           id: reg.evidences._id,
-          status: reg.evidences.status,
           type: reg.evidences.type,
           quantity: reg.evidences.quantity,
           note: reg.evidences.note,
           depth: reg.evidences.depth,
           soil: reg.evidences.soil,
-          point: reg.location.point,
+          point: reg._id,
+          point_name: reg.name,
           point_lon: reg.location.coordinates[0],
           point_lat: reg.location.coordinates[1],
           point_status: reg.status,
-          createUser: reg.createUser,
-          updateUser: reg.updateUser,
+          project: reg.project,
+          project_name: reg.projects.name,
+          createUser: reg.createUser_aux.name,
+          updateUser: reg.updateUser_aux.name,
           createDate: reg.createDate,
           updateDate: reg.updateDate
         });
@@ -93,6 +95,48 @@ async function buildExport(project_id) {
          }
        },      
        {
+        "$lookup": {
+          "from": "projects",
+          "localField": "project",
+          "foreignField": "_id",
+          "as": "projects"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$projects",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+        "$lookup": {
+          "from": "users",
+          "localField": "createUser",
+          "foreignField": "_id",
+          "as": "createUser_aux"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$createUser_aux",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
+        "$lookup": {
+          "from": "users",
+          "localField": "updateUser",
+          "foreignField": "_id",
+          "as": "updateUser_aux"
+        }
+       },
+       {
+          "$unwind": {
+            "path": "$updateUser_aux",
+            "preserveNullAndEmptyArrays": true           
+         }
+       },      
+       {
             "$match": {
             "project" : mongoose.Types.ObjectId(project_id)
             }       
@@ -103,59 +147,6 @@ async function buildExport(project_id) {
       mostra(res)
     })
 }  
-
-
-exports.xlsx_old = async(req,res) => {
-  
-  const workbook = new ExcelJS.Workbook();
-  workbook.creator = 'Situs';
-  workbook.created = new Date();
-
-  const worksheet = workbook.addWorksheet("Evidencias");
-  worksheet.columns = [
-      { header: 'Id', key: '_id', width: 36 },
-      { header: 'Status', key: 'status', width: 120 },
-      { header: 'Tipo', key: 'type', width: 120 },
-      { header: 'Quantidade', key: 'quantity', width: 120 },
-      { header: 'Notas', key: 'note', width: 120 },
-      { header: 'Profundidade', key: 'depth', width: 120 },
-      { header: 'Solo', key: 'soil', width: 120 },
-      { header: 'Id do Ponto', key: 'point', width: 120 },
-      { header: 'Latitude', key: 'point_lat', width: 120 },
-      { header: 'Longitude', key: 'point_lon', width: 120 },
-      { header: 'Status do Ponto', key: 'point_status', width: 120 },
-      { header: 'Id do Projeto', key: 'project', width: 120 },
-      { header: 'Nome do Projeto', key: 'project_name', width: 120 },
-      { header: 'Usuário que criou', key: 'createUser', width: 120 },
-      { header: 'Usuário que atualizou', key: 'updateUser', width: 120 },
-      { header: 'Data de criação', key: 'createDate', width: 120 },
-      { header: 'Data de atualização', key: 'updateDate', width: 120 }
-  ];
-
-  evidences_xls = []
-  try {
-    const points = await Point.find({project:req.params.id})
-    points.map(async point => {
-      const evidences = await Evidence.find({point: point._id})     
-      evidences.map(async evidence => {     
-        evidences_xls.push({ ...evidence, point_lon: point.location.coordinates[1], point_lat: point.location.coordinates[0], point_status: point.status, project: point.project })
-      })
-      console.log(evidences_xls)
-    })
-    return res.status(200).send({evidences_xls})
-  } catch (err) {
-    return res.status(400).send({ error: err })   
-  }
-
-
-  worksheet.addRow({word: 'Olá', def: 'Mundo'});
-
-  workbook.xlsx.writeFile('Project.xlsx')
-    .then(function() {
-      res.download('Project.xlsx', 'Project.xlsx')
-  });
-
-}
 
 
 exports.xlsx = async (req,res) => {
