@@ -19,9 +19,10 @@ function mostra(regs) {
       { header: 'Notas', key: 'note', width: 80 },
       { header: 'Profundidade', key: 'depth', width: 30 },
       { header: 'Solo', key: 'soil', width: 30 },
+      { header: 'Imagem', key: 'image', width: 120 },     
       { header: 'Id do Ponto', key: 'point', width: 30 },
       { header: 'Nome do Ponto', key: 'point_name', width: 50 },     
-      { header: 'Longitude do Ponto', key: 'point_lon', width:320 },
+      { header: 'Longitude do Ponto', key: 'point_lon', width:30 },
       { header: 'Latitude do Ponto', key: 'point_lat', width: 30 },
       { header: 'Status do Ponto', key: 'point_status', width: 30 },
       { header: 'Id do Projeto', key: 'project', width: 30 },
@@ -35,12 +36,14 @@ function mostra(regs) {
   regs.map(reg => {
     if(reg.evidences) {        
         regs_xls.push({
+          // antes é necessário testar se reg.evidences._id já existe em regs_xls; caso não exista, pula.
           id: reg.evidences._id,
           type: reg.evidences.type,
           quantity: reg.evidences.quantity,
           note: reg.evidences.note,
           depth: reg.evidences.depth,
           soil: reg.evidences.soil,
+          image: reg.images.url, 
           point: reg._id,
           point_name: reg.name,
           point_lon: reg.location.coordinates[0],
@@ -52,6 +55,7 @@ function mostra(regs) {
           updateUser: reg.updateUser_aux.name,
           createDate: reg.createDate,
           updateDate: reg.updateDate
+          //
         });
     }
   })
