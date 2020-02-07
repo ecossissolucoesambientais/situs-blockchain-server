@@ -17,6 +17,17 @@ const schema = mongoose.Schema({
       required: true
     }
   },
+  locationEffective: {
+    type: {
+      type: String, 
+      enum: ['Point'],
+      required: false
+    },
+    coordinates: {
+      type: [Number],
+      required: false
+    }
+  },
   note: {
     type: String,
     required: [false]
