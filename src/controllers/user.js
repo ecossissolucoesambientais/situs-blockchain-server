@@ -1,4 +1,6 @@
 const User = require('../models/user')
+const Image = require('../models/image')
+
 
 const emailRegex = /\S+@\S+\.\S+/
 
