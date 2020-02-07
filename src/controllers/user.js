@@ -14,6 +14,17 @@ exports.list = async (req, res) => {
   }
 }
 
+// List all images from this point
+exports.images = async (req, res) => {
+  try {
+    const images = await Image
+      .find({refModel: 'User', refId: req.params.id})
+    return res.status(200).send(images)
+  } catch (err) {
+    return res.status(400).send({ error: 'Erro ao listar imagens' })
+  }
+}
+
 // Get user by ID
 exports.show = async (req, res) => {
   try {
