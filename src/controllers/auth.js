@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Image = require('../models/image')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -55,6 +56,10 @@ exports.login = async (req, res) => {
   return res.status(400).send({ error: 'Senha inválida' })
 
   user.password = undefined  
+
+  const images = await Image
+      .find({refModel: 'User', refId: user.id}).sort({_id:-1}).limit(1)
+      user.avatar_url = images[0].url      
 
   res.send({ 
     user, 
