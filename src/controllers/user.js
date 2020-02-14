@@ -32,6 +32,9 @@ exports.show = async (req, res) => {
   try {
     const user = await User
       .findById(req.params.id)
+    const images = await Image
+      .find({refModel: 'User', refId: req.params.id}).sort({_id:-1}).limit(1)
+      user.avatar_url = images[0].url      
       res.status(200).send(user)
   }
   catch (err) {
