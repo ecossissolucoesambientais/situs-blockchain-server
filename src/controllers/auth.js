@@ -56,7 +56,6 @@ exports.login = async (req, res) => {
   return res.status(400).send({ error: 'Senha inválida' })
 
   user.password = undefined  
-  user.teste = 1
 
   const images = await Image
       .find({refModel: 'User', refId: user.id}).sort({_id:-1}).limit(1)
