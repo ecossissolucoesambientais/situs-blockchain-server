@@ -57,10 +57,6 @@ exports.login = async (req, res) => {
 
   user.password = undefined
 
-  const images = await Image
-      .find({refModel: 'User', refId: user.id}).sort({_id:-1}).limit(1)
-      user.avatar_url = images[0].url      
-
   res.send({ 
     user, 
     token: generateToken({ id: user.id })
