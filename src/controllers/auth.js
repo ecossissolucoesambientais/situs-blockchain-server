@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
   if (!await bcrypt.compare(password, user.password))
   return res.status(400).send({ error: 'Senha inválida' })
 
-  user.password = undefined  
+  user.password = 'teste'
   user.url = 'teste'
 
   const images = await Image
