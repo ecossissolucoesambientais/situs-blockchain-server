@@ -56,6 +56,7 @@ exports.login = async (req, res) => {
   return res.status(400).send({ error: 'Senha inválida' })
 
   user.password = undefined
+  user.bla = 1
 
   res.send({ 
     user, 
