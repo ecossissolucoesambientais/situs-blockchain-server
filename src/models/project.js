@@ -39,11 +39,11 @@ const schema = mongoose.Schema({
   },
   state: {
     type: String,
-    required: [true,"Estado é campo obrigatório"]
+    required: false
   },
   city: {
     type: String,
-    required: [true,"Cidade é campo obrigatório"]
+    required: false
   },
   location: {
     type: String,

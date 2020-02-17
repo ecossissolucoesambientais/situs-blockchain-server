@@ -1,4 +1,5 @@
 const Image = require('../models/image')
+const User = require('../models/user')
 
 exports.list = async (req, res) => {
   try {
@@ -53,7 +54,16 @@ exports.upload = async (req, res) => {
         createUser: req.userId,
         updateUser: req.userId
     })
+
+    if(req.body.refModel === 'User') {
+      const user = await User
+        .findByIdAndUpdate(req.body.refId, {avatar: url}, { new: true })
+
+
+    }
     return res.status(200).send(image)
+
+
   }
   catch (err) {
     return res.status(400).send({ error: 'Erro ao criar imagem.' })  }

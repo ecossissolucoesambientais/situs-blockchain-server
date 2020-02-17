@@ -62,7 +62,7 @@ function mostra(regs) {
 
   worksheet.addRows(regs_xls)
 
-  workbook.xlsx.writeFile('Project.xlsx')
+  workbook.xlsx.writeFile('Project_' + regs_xls[0].project + '.xlsx')
     .then(function() {
       return 1
   });
@@ -155,7 +155,7 @@ async function buildExport(project_id) {
 
 exports.xlsx = async (req,res) => {
     buildExport(req.params.id)
-    res.download('Project.xlsx', 'Project.xlsx')    
+    res.download('Project_' + req.params.id + '.xlsx', 'Project_' + req.params.id + '.xlsx')    
 }
 
 

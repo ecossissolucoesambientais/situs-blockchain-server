@@ -1,5 +1,4 @@
 const User = require('../models/user')
-const Image = require('../models/image')
 
 
 const emailRegex = /\S+@\S+\.\S+/
@@ -13,17 +12,6 @@ exports.list = async (req, res) => {
   }
   catch (err) {
     return res.status(400).send({ error: 'Erro ao listar usuários' })
-  }
-}
-
-// List all images from this point
-exports.images = async (req, res) => {
-  try {
-    const images = await Image
-      .find({refModel: 'User', refId: req.params.id})
-    return res.status(200).send(images)
-  } catch (err) {
-    return res.status(400).send({ error: 'Erro ao listar imagens' })
   }
 }
 

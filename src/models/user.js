@@ -6,6 +6,10 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
+  avatar: {
+    type: String,
+    required: false
+  },
   email: {
     type: String,
     unique: true,

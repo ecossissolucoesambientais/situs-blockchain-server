@@ -55,8 +55,7 @@ exports.login = async (req, res) => {
   if (!await bcrypt.compare(password, user.password))
   return res.status(400).send({ error: 'Senha inválida' })
 
-  user.password = 'teste'
-  user.url = 'teste'
+  user.password = undefined
 
   const images = await Image
       .find({refModel: 'User', refId: user.id}).sort({_id:-1}).limit(1)
