@@ -1,10 +1,8 @@
 const User = require('../models/user')
-const Image = require('../models/image')
-
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-/* const crypto = require('crypto') */
-/* const mailer = require('../modules/mailer') */
+const crypto = require('crypto')
+const Mail = require('../config/nodemailer')
 
 const emailRegex = /\S+@\S+\.\S+/
 
@@ -55,8 +53,7 @@ exports.login = async (req, res) => {
   if (!await bcrypt.compare(password, user.password))
   return res.status(400).send({ error: 'Senha inválida' })
 
-  user.password = undefined
-  
+  user.password = undefined  
 
   res.send({ 
     user, 
@@ -64,16 +61,16 @@ exports.login = async (req, res) => {
   })
 }
 
-/* exports.forgotPassword = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
   const { email } = req.body
 
   try {
     const user = await User.findOne({ email })
 
     if (!user)
-      return res.status(400).send({ error: 'User not found' })
+      return res.status(400).send({ error: 'Usuário não encontrado.' })
 
-    const token = crypto.randomBytes(20).toString('hex')
+    const token = crypto.randomBytes(3).toString('hex')
 
     const now = new Date()
     now.setHours(now.getHours() + 1)
@@ -85,20 +82,17 @@ exports.login = async (req, res) => {
       }
     })
 
-    mailer.sendMail({
+    await Mail.sendMail({
       to: email,
-      from: 'rodrigo@hiel.com.br',
-      template: 'auth/forgot_password',
+      from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
+      subject: 'Recuperação de senha',
+      template: 'forgotPassword',
       context: { token }
-    }, (err) => {
-      if (err)
-        return res.status(400).send({ error: 'Cannot send forgot password email' })
-
-        res.status(200).send({ message: 'Email for password recovery was sent'})
     })
     
+    return res.status(200).send()
   } catch (err) {
-    res.status(400).send({ error: 'Error on forgot password. Try again '})
+    return res.status(400).send(err)
   }
 }
 
@@ -110,25 +104,27 @@ exports.resetPassword = async (req, res) => {
       .select('+passwordResetToken passwordResetExpires')
 
     if (!user)
-      return res.status(400).send({ error: 'User not found' })
+      return res.status(400).send({ error: 'Usuário não encontrado.' })
 
     if (token !== user.passwordResetToken)
-      return res.status(400).send({ error: 'Token invalid' })
+      return res.status(400).send({ error: 'Token inválido.' })
+
+    if (!password)
+      return res.status(400).send({ error: 'Senha não enviada.'})
 
     const now = new Date()
 
     if (now > user.passwordResetExpires)
-      return res.status(400).send({ error: 'Token expired. Generate a new one' })
+      return res.status(400).send({ error: 'Token expirado.' })
 
     user.password = password
-    res.status(200).send({ message: 'Password changed' })
-
     await user.save()
 
+    res.status(200).send({ message: 'Senha alterada com sucesso.' })
   } catch (err) {
-    res.status(400).send({ error: 'Cannot reset password. Try again' })
+    res.status(400).send({ error: 'Erro ao atualizar senha.' })
   }
-} */
+}
 
 exports.validateToken = async (req, res) => {
   const token = req.body.token || ''
