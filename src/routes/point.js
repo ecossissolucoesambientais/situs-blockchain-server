@@ -7,7 +7,7 @@ const controller = require('../controllers/point')
 const authMiddleare = require('../middlewares/auth')
 router.use(authMiddleare)
 
-router.get('/', controller.list)
+router.get('/project/:id', controller.list)
 router.get('/images/:id', controller.images)
 router.get('/:id', controller.show)
 router.put('/update/:id', controller.update)

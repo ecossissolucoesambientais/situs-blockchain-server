@@ -6,7 +6,7 @@ const Image = require('../models/image')
 exports.list = async (req, res) => {
   try {
     const points = await Point
-      .find()
+      .find() // TO DO: retornar apenas pontos do projeto
     return res.status(200).send(points)
   }
   catch (err) {
