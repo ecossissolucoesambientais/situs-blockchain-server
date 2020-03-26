@@ -4,7 +4,7 @@ const Project = require('../models/project')
 exports.list = async (req, res) => {
   try {
     const projects = await Project
-      .find() // TO DO: filtrar pelo id do coordenador.
+      .find({createUser: req.userId}) // TO DO: filtrar pelo id do coordenador.
     return res.status(200).send(projects)
   }
   catch (err) {
@@ -16,6 +16,7 @@ exports.list = async (req, res) => {
 exports.show = async (req, res) => {
   try {
     const project = await Project
+      .find({createUser: req.userId})
       .findById(req.params.id) // TO DO: filtrar projeto pelo id do coordenador
       res.status(200).send(project)
   }
@@ -41,6 +42,7 @@ exports.new = async (req, res) => {
 exports.update = async (req, res) => {
   try {    
     const project = await Project
+      .find({createUser: req.userId})
       .findByIdAndUpdate(req.params.id, req.body, { new: true }) // TO DO: filtrar projeto pelo id do coordenador
       if (project) {
         res.status(200).send({ message: 'Projeto atualizado', project })
@@ -56,7 +58,7 @@ exports.update = async (req, res) => {
 // Remove project by ID
 exports.delete = async (req, res) => {
   try {
-    const project = await Project.findByIdAndRemove(req.params.id) // TO DO: filtrar projetos pelo id do coordenador
+    const project = await Project.find({createUser: req.userId}).findByIdAndRemove(req.params.id) // TO DO: filtrar projetos pelo id do coordenador
       if (project) {
         res.status(200).send({ message: 'Projeto removido', Project })
       }
