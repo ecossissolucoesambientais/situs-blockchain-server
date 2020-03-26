@@ -12,7 +12,7 @@ const schema = mongoose.Schema({
     required: false
   },
   allowNum: {
-    type: Number,
+    type: String,
     required: [true,"Número de portaria é campo obrigatório"]
   },
   allowDtPubl: {
