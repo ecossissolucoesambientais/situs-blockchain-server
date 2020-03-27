@@ -16,7 +16,7 @@ exports.list = async (req, res) => {
 exports.show = async (req, res) => {
   try {
     const project = await Project
-      .find({createUser: req.userId,id: req.params.id}) // TO DO: filtrar projeto pelo id do coordenador
+      .find({createUser: req.userId, _id: req.params.id}) // TO DO: filtrar projeto pelo id do coordenador
       res.status(200).send(project)
   }
   catch (err) {
