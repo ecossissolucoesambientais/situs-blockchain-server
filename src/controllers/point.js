@@ -111,7 +111,7 @@ exports.delete = async (req, res) => {
   try {
     const point = await Point.findByIdAndRemove(req.params.id)
       if (point) {
-        res.status(200).send({ message: 'Ponto removido', Point })
+        res.status(200).send({ message: 'Ponto removido', point })
       }
       else {
         return res.status(400).send({ error: 'Ponto não encontrado' })
