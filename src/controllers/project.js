@@ -57,7 +57,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const project = await Project
-      .findOneAndRemove({createUser: req.userId}) // TO DO: filtrar projetos pelo id do coordenador
+      .findOneAndRemove({createUser: req.userId, _id: req.params.id}) // TO DO: filtrar projetos pelo id do coordenador
       if (project) {
         res.status(200).send({ message: 'Projeto removido', Project })
       }
