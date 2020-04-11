@@ -44,16 +44,21 @@ exports.delete = async (req, res) => {
 exports.upload = async (req, res) => {
   try {
     const { originalname: name, size, key, location: url = ''} = req.file
-    const image = await Image.create({
-        name, 
-        size,
-        key,
-        url,
-        refId: req.body.refId,
-        refModel: req.body.refModel,
-        createUser: req.userId,
-        updateUser: req.userId
-    })
+    const image_exists = await Image
+      .find({name: name, refId: req.body.refId, refModel: req.body.refModel})
+    if(image_exists.lentgh == 0) {
+      const image = await Image.create({
+          name, 
+          size,
+          key,
+          url,
+          refId: req.body.refId,
+          refModel: req.body.refModel,
+          createUser: req.userId,
+          updateUser: req.userId
+      })
+    } else
+      return res.status(400).send({ error: 'Erro ao criar imagem: imagem já existente' })
 
     if(req.body.refModel === 'User') {
       const user = await User
