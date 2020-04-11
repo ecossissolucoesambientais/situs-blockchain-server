@@ -58,7 +58,7 @@ exports.upload = async (req, res) => {
           updateUser: req.userId
       })
     } else
-      return res.status(400).send({ error: 'Erro ao criar imagem: imagem já existente' })
+      return res.status(200).send({ error: 'Objeto já cadastrado.' })
 
     if(req.body.refModel === 'User') {
       const user = await User

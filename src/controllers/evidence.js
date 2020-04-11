@@ -45,7 +45,7 @@ exports.new = async (req, res) => {
       const evidence = await Evidence.create(req.body)
       res.status(200).send(evidence)
     } else
-      return res.status(400).send({ error: "Evidência já existente." })
+      return res.status(200).send({ error: "Evidência já cadastrada." })
 
   } catch (err) {
     return res.status(400).send({ error: err })
