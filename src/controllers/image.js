@@ -57,17 +57,16 @@ exports.upload = async (req, res) => {
           createUser: req.userId,
           updateUser: req.userId
       })
+
+      if(req.body.refModel === 'User') {
+        const user = await User
+          .findByIdAndUpdate(req.body.refId, {avatar: url}, { new: true })
+      }
+
+      return res.status(200).send(image)
+
     } else
       return res.status(200).send({ error: 'Objeto já cadastrado.' })
-
-    if(req.body.refModel === 'User') {
-      const user = await User
-        .findByIdAndUpdate(req.body.refId, {avatar: url}, { new: true })
-
-
-    }
-    return res.status(200).send(image)
-
 
   }
   catch (err) {
