@@ -45,7 +45,7 @@ exports.upload = async (req, res) => {
   try {
     const { originalname: name, size, key, location: url = ''} = req.file
     const image_exists = await Image
-      .find({name: name, size: size, refId: req.body.refId, refModel: req.body.refModel})
+      .find({name: name, size: size, url: url, refId: req.body.refId, refModel: req.body.refModel})
     if(image_exists.length===0) {
       const image = await Image.create({
           name, 
