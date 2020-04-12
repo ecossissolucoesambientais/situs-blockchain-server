@@ -40,7 +40,7 @@ exports.new = async (req, res) => {
   try {
     const {type,quantity,note,depth,soil,point} = req.body
     const evidence_exists = await Evidence
-      .find(type,quantity,note,depth,soil,point)
+      .find({type,quantity,note,depth,soil,point})
     if(!evidence_exists) {
       const evidence = await Evidence.create(req.body)
       res.status(200).send(evidence)
