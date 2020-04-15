@@ -1,5 +1,6 @@
 const ExcelJS = require('exceljs')
 const Project = require('../models/project')
+const User = require('../models/user')
 const Point = require('../models/point')
 const mongoose = require('../database')
 const moment = require('moment')
@@ -11,6 +12,7 @@ exports.xlsx = async (req, res) => {
 
   try {
     const project = await Project.findById(id)
+    const user = await User.findById(project.createUser)
     const data = await Point.aggregate([
       {
         "$lookup": {
@@ -125,7 +127,8 @@ exports.xlsx = async (req, res) => {
         subject: 'Exportação de dados',
         template: 'soilSurveysExport',
         context: { 
-          projectName: project.name
+          projectName: project.name,
+          firstName: (user.name.split(" "))[0]
         },
         attachments: [
           {
