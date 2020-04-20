@@ -87,7 +87,10 @@ exports.forgotPassword = async (req, res) => {
       from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
       subject: 'Recuperação de senha',
       template: 'forgotPassword',
-      context: { token }
+      context: {
+        token,
+        firstName: (user.name.split(" "))[0],
+      }
     })
     
     return res.status(200).send()
