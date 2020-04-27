@@ -6,7 +6,10 @@ const express = require('express')
 const morgan =require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const ExcelJS = require('exceljs')
+const moment = require('moment')
+require('moment/locale/pt-br')
+
+moment.locale('pt-br')
 
 // Import Routes
 const indexRoute = require('./routes/index')
@@ -17,7 +20,6 @@ const pointRoute = require('./routes/point')
 const evidenceRoute = require('./routes/evidence')
 const imageRoute = require('./routes/image')
 const exportRoute = require('./routes/export')
-
 
 // Define app as an Express instance
 const app = express()
@@ -41,7 +43,6 @@ app.use('/points', pointRoute)
 app.use('/evidences', evidenceRoute)
 app.use('/images',imageRoute)
 app.use('/export',exportRoute)
-
 
 // Create Server
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
