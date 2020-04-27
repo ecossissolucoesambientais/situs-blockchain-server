@@ -3,7 +3,7 @@ const Project = require('../models/project')
 const User = require('../models/user')
 const Point = require('../models/point')
 const mongoose = require('../database')
-const moment = require('moment')
+const moment = require('moment-timezone')
 const Mail = require('../config/nodemailer')
 
 exports.xlsx = async (req, res) => {
@@ -72,7 +72,7 @@ exports.xlsx = async (req, res) => {
       { header: 'Relevo', key: 'pointRelief', width: 15 },
       { header: 'Vegetação', key: 'pointVegetation', width: 15 },
       { header: 'Atualizado por', key: 'updateUser', width: 20 },
-      { header: 'Última atualização', key: 'updateDate', width: 15 },
+      { header: 'Última atualização', key: 'updateDate', width: 20 },
       { header: 'Observações', key: 'pointNotes', width: 12 },
       { header: 'Fotos do entorno', key: 'pointImages', width: 30 },
       { header: 'Evidências', key: 'evidences', width: 10 },
@@ -99,7 +99,7 @@ exports.xlsx = async (req, res) => {
         pointRelief: soilSurvey.relief,
         pointVegetation: soilSurvey.vegetation,
         updateUser: soilSurvey.updateUser.length > 0 ? soilSurvey.updateUser[0].name : 'Usuário removido',
-        updateDate: soilSurvey.updateDate,
+        updateDate: moment(soilSurvey.updateDate).tz('America/Sao_Paulo').format('L LT'),
         pointNotes: soilSurvey.note,
         pointImages,
         evidences: soilSurvey.evidences.length,
@@ -112,9 +112,9 @@ exports.xlsx = async (req, res) => {
     soilSurveysSheet.getRow(1).font = { bold: true }
     
     const content = await workbook.xlsx.writeBuffer()
-    const date = moment().format('DD-MM-YYYY')
-    const hour = moment().format('kk')
-    const minute = moment().format('mm')
+    const date = moment().tz('America/Sao_Paulo').format('DD-MM-YYYY')
+    const hour = moment().tz('America/Sao_Paulo').format('kk')
+    const minute = moment().tz('America/Sao_Paulo').format('mm')
     const extension = 'xlsx'
     const filename = `Sondagens_${date}_${hour}h${minute}.${extension}`
     const contentDisposition = 'attachment'
@@ -149,5 +149,3 @@ exports.xlsx = async (req, res) => {
     res.status(400).send({ err })
   }
 }
-
-
