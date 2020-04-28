@@ -1,0 +1,36 @@
+<p>
+  Olá, <a style="text-decoration: none;">{{ email }}</a>
+</p>
+<p>
+  Para ativar sua conta clique no botão a seguir:
+</p>
+<div style="margin: 35px 0px;">
+  <a 
+    href="{{ confirmationUrl }}"
+    target="_blank" 
+    style="text-decoration: none;"
+  >
+    <span 
+        style="
+          width: 100%;
+          padding: 12px 15px; 
+          border-radius: 6px; 
+          color: #fff; 
+          background-color: #2D2D2D;
+          border: none;
+          text-decoration: none;
+        "
+    >
+      Confirmar email
+    </span>
+  </a>
+</div>
+<p>
+  Ou copie e cole o link na barra de endereços:
+</p>
+<a
+  href="{{ confirmationUrl }}"
+  target="_blank"
+>
+  {{ confirmationUrl }}
+</a>
