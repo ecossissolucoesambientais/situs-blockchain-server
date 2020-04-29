@@ -19,7 +19,15 @@ const schema = mongoose.Schema({
     enum: ['Superfície','0-10cm','10-20cm','20-30cm','30-40cm','40-50cm','50-60cm','60-70cm','70-80cm','80-90cm','90-100cm','100-110cm'],
     required: [true,"Profundidade é um campo obrigatório"]
   },
-  soil: {
+  soilTexture: {
+    type: String,
+    required: [false]
+  },
+  soilColor: {
+    type: String,
+    required: [false]
+  },
+  soilConsistency: {
     type: String,
     required: [false]
   },
