@@ -36,7 +36,15 @@ const schema = mongoose.Schema({
     type: String,
     required: [false]
   },
-  soil: {
+  soilTexture: {
+    type: String,
+    required: [false]
+  },
+  soilColor: {
+    type: String,
+    required: [false]
+  },
+  soilConsistency: {
     type: String,
     required: [false]
   },
