@@ -36,12 +36,6 @@ const schema = mongoose.Schema({
     ref: 'Point',
     required: true    
   },
-  status: {
-    type: String,
-    enum: ['Em aberto','Realizado','Cancelado'],
-    default: 'Em aberto',
-    required: [false]
-  },
   createDate: {
     type: Date,
     required: true,
