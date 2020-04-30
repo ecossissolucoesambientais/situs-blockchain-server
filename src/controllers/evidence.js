@@ -38,20 +38,26 @@ exports.show = async (req, res) => {
 // Create evidence
 exports.new = async (req, res) => {
   try {
-    const {type,quantity,note,depth,soil,point} = req.body
+    const {
+      type, quantity, note, depth, soilTexture,
+      soilColor, soilConsistency, point
+    } = req.body
+
     const evidence_exists = await Evidence
-      .find({type,quantity,note,depth,soil,point})
-    if(evidence_exists.length===0) {
+      .find({
+        type, quantity, note, depth, soilTexture,
+        soilColor, soilConsistency, point
+      })
+
+    if (evidence_exists.length === 0) {
       const evidence = await Evidence.create(req.body)
-      res.status(200).send(evidence)
+      return res.status(200).send(evidence)
     } else
       return res.status(200).send({ error: "Evidência já cadastrada." })
-
   } catch (err) {
     return res.status(400).send({ error: err })
   }
 }
-
 
 // Update evidence by ID
 exports.update = async (req, res) => {
