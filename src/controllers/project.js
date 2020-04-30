@@ -57,18 +57,15 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const project = await Project
-      .findOneAndRemove({createUser: req.userId, _id: req.params.id}) // TO DO: filtrar projetos pelo id do coordenador
-      if (project) {
-        res.status(200).send({ message: 'Projeto removido', Project })
-      }
-      else {
-        return res.status(400).send({ error: 'Projeto não encontrado' })
-      }
+      .findOneAndRemove({createUser: req.userId, _id: req.params.id})
+
+    if (project) {
+      return res.status(200).send({ message: 'Projeto removido' })
+    } else {
+      return res.status(400).send({ error: 'Projeto não encontrado' })
+    }
   }
   catch (err) {
     return res.status(400).send({ error: 'Erro ao remover projeto' })
   }
 }
-
-
-

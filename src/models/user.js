@@ -16,6 +16,10 @@ const schema = mongoose.Schema({
     required: true,
     lowercase: true
   },
+  isEmailConfirmed: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: true,
