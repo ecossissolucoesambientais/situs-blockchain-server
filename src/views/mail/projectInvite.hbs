@@ -1,8 +1,10 @@
 <p>
-  Olá, <a style="text-decoration: none;">{{ email }}</a>
+  Olá, <strong>{{ invitedFirstName }}</strong>
 </p>
 <p>
-  Para ativar sua conta clique no botão abaixo:
+  {{ requesterName }} está lhe convidando para se juntar à equipe
+  de <strong>{{ projectName }}</strong>. Para aceitar, clique no 
+  botão abaixo:
 </p>
 <div style="margin: 35px 0px;">
   <a 
@@ -21,7 +23,7 @@
           text-decoration: none;
         "
     >
-      Confirmar email
+      Juntar-se à equipe
     </span>
   </a>
 </div>
@@ -34,3 +36,6 @@
 >
   {{ confirmationUrl }}
 </a>
+<p>
+  Se deseja recusar o convite, por favor ignore este email.
+</p>

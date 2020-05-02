@@ -25,30 +25,10 @@ const schema = mongoose.Schema({
     required: [true,"data de vencimento da portaria é campo obrigatório"],
     default: Date.now
   },
-  staffMainCoord: {
-    type: String,
-    required: [true,"Coordenador é campo obrigatório"]
-  },
-  staffFieldCoord: {
-    type: String,
-    required: [false,"Coordenador de campo é campo obrigatório"]
-  },
-  staffFieldArch: {
-    type: String,
-    required: [false,"Arqueólogo de campo é campo obrigatório"]
-  },
-  state: {
-    type: String,
-    required: false
-  },
-  city: {
-    type: String,
-    required: false
-  },
-  location: {
-    type: String,
-    required: false
-  },
+  users: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   activities: {
     type: Array,
     required: [true,"Atividades é campo obrigatório"]
