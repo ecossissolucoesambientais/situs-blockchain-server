@@ -43,8 +43,9 @@ exports.show = async (req, res) => {
 
 exports.new = async (req, res) => {
   try {
-    const project = await Project.create(req.body)    
-    return res.send({ project })
+    let project = await Project.create(req.body)
+    project = await project.populate(['users', 'createUser', 'updateUser']).execPopulate()
+    return res.status(200).send({ project })
   } catch (err) {
     return res.status(400).send({ error: err.message })
   }
@@ -53,7 +54,9 @@ exports.new = async (req, res) => {
 exports.update = async (req, res) => {
   try {    
     const project = await Project
-      .findOneAndUpdate({createUser: req.userId, _id: req.params.id}, req.body, { new: true }) // TO DO: filtrar projeto pelo id do coordenador
+      .findOneAndUpdate({createUser: req.userId, _id: req.params.id}, req.body, { new: true })
+      .populate(['users', 'createUser', 'updateUser'])
+
       if (project) {
         return res.status(200).send({ message: 'Projeto atualizado', project })
       } else {
@@ -68,7 +71,8 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const project = await Project
-      .findOneAndRemove({createUser: req.userId, _id: req.params.id})
+      .findOneAndRemove({ createUser: req.userId, _id: req.params.id })
+      .populate(['users', 'createUser', 'updateUser'])
 
     if (project) {
       return res.status(200).send({ message: 'Projeto removido' })
