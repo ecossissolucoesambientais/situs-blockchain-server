@@ -181,7 +181,9 @@ exports.removeUser = async (req, res) => {
       return res.status(400).send({ error: 'Usuário não encontrado.' })
     }
 
-    const project = await Project.findById(projectId)
+    const project = await Project
+      .findById(projectId)
+      .populate(['users', 'createUser', 'updateUser'])
 
     if (!project) {
       return res.status(400).send({ error: 'Projeto não encontrado.' })
