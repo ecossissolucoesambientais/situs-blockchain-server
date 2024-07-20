@@ -123,7 +123,7 @@ exports.xlsx = async (req, res) => {
     if (email) {
       await Mail.sendMail({
         to: email,
-        from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
+        from: '"Situs Arqueologia" <situs@ecoss.is>',
         subject: 'Exportação de dados',
         template: 'soilSurveysExport',
         context: { 

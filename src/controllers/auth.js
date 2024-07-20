@@ -15,7 +15,7 @@ function sendConfirmationEmail(userId, email) {
 
   Mail.sendMail({
     to: email,
-    from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
+    from: '"Situs Arqueologia" <situs@ecoss.is>',
     subject: 'Confirmação de email',
     template: 'confirmEmail',
     context: {
@@ -94,7 +94,7 @@ exports.forgotPassword = async (req, res) => {
 
     await Mail.sendMail({
       to: email,
-      from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
+      from: '"Situs Arqueologia" <situs@ecoss.is>',
       subject: 'Recuperação de senha',
       template: 'forgotPassword',
       context: {

@@ -113,7 +113,7 @@ exports.inviteUser = async (req, res) => {
         
         await Mail.sendMail({
           to: userEmail,
-          from: '"Situs Arqueologia" <nao-responda@situsarqueologia.com.br>',
+          from: '"Situs Arqueologia" <situs@ecoss.is>',
           subject: 'Convite para projeto',
           template: 'projectInvite',
           context: {
