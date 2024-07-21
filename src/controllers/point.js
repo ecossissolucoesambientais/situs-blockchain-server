@@ -1,5 +1,6 @@
 const Point = require('../models/point')
 const Image = require('../models/image')
+const Evidence = require('../models/evidence')
 
 
 // List all points

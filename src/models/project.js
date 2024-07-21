@@ -31,7 +31,7 @@ const schema = mongoose.Schema({
   }],
   activities: {
     type: Array,
-    required: [true,"Atividades é campo obrigatório"]
+    required: [false,"Atividades é campo obrigatório"]
   },
   createDate: {
     type: Date,

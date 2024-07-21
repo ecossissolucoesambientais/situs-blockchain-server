@@ -4,11 +4,11 @@ const schema = mongoose.Schema({
   type: {
     type: String,
     enum: ['Louça','Vidro','Metal','Amostra de carvão','Lítico','Madeira','Osso','Cerâmica','Deriv. de Plástico e Látex','Malacológico','Outros'],
-    required: [true,"Tipo de evidência é um campo obrigatório"]
+    required: [false,"Tipo de evidência é um campo obrigatório"]
   },
   quantity: {
     type: Number,
-    required: [true,"Quantidade é um campo obrigatório"]
+    required: [false,"Quantidade é um campo obrigatório"]
   },
   note: {
     type: String,
@@ -17,7 +17,7 @@ const schema = mongoose.Schema({
   depth: {
     type: String,
     enum: ['Superfície','0-10cm','10-20cm','20-30cm','30-40cm','40-50cm','50-60cm','60-70cm','70-80cm','80-90cm','90-100cm','100-110cm'],
-    required: [true,"Profundidade é um campo obrigatório"]
+    required: [false,"Profundidade é um campo obrigatório"]
   },
   soilTexture: {
     type: String,
@@ -36,6 +36,14 @@ const schema = mongoose.Schema({
     ref: 'Point',
     required: true    
   },
+  title: {
+    type: String,
+    required: [true, "Título é um campo obrigatório"]
+  },
+  note: {
+    type: String,
+    required: [true, "Descrição é um campo obrigatório"]
+  },  
   createDate: {
     type: Date,
     required: true,
