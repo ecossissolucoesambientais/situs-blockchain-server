@@ -374,3 +374,61 @@ async function mint(toAddress, tokenURI, privateKey, provider, contractAddress, 
         throw error; // Re-lançar o erro para ser tratado na função chamadora
     }
 }
+/*
+
+import { ethers } from "ethers";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
+
+// Inicialize o Thirdweb SDK
+const provider = ethers.getDefaultProvider(NETWORK);
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const sdk = new ThirdwebSDK(wallet);
+
+// Obtenha o contrato ERC-721 OpenEdition
+const contract = sdk.getNFTsbyCollection(CONTRACT_ADDRESS);
+
+// Função para mintar novos NFTs
+const mintNFT = async (metadataCid) => {
+  try {
+    const metadataUrl = ipfs://${metadataCid};
+    const result = await contract.mint({
+      uri: metadataUrl
+    });
+    console.log("NFT mintado com sucesso:", result);
+    return result.id;
+  } catch (error) {
+    console.error("Erro ao mintar NFT:", error);
+  }
+};
+
+// Função para buscar informações do contrato usando Chainlink
+const fetchNFTInfo = async (tokenId) => {
+  try {
+    const chainlinkContract = new ethers.Contract(CHAINLINK_CONTRACT_ADDRESS, [
+      // ABI do contrato Chainlink
+      "function requestData(string memory url, string memory path) public",
+      "function data() public view returns (uint256)"
+    ], wallet);
+
+    // Construa a URL e o caminho JSON de acordo com a API que retorna os dados do NFT
+    const url = ${CHAINLINK_NODE_URL}/nft/${CONTRACT_ADDRESS}/${tokenId};
+    const path = "data.value";
+
+    // Envie a solicitação ao Chainlink
+    const tx = await chainlinkContract.requestData(url, path);
+    await tx.wait();
+
+    // Obtenha os dados retornados
+    const data = await chainlinkContract.data();
+    console.log("Dados do Chainlink:", data);
+  } catch (error) {
+    console.error("Erro ao buscar informações do NFT:", error);
+  }
+};
+
+main();
+
+*/

@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@pinata/sdk": "^2.1.0",
+    "@thirdweb-dev/sdk": "^4.0.99",
     "aws-sdk": "^2.517.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
